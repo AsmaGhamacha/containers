@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile.jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - jupyter_notebooks:/notebooks
+
+  mongodb:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  data-science:
+    build:
+      context: .
+      dockerfile: Dockerfile.data-science
+    volumes:
+      - data:/app/data
+    depends_on:
+      - mongodb
+
+volumes:
+  jupyter_notebooks:
+  mongodb_data:
+  data:
