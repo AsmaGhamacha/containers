@@ -1,5 +1,5 @@
-# Start from a Debian based image 
-FROM debian:latest
+# Start from a ubuntu based image 
+FROM ubuntu:22.04
 
 # Install Python and pip
 RUN apt-get update && apt-get install -y \
@@ -7,11 +7,11 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install data science libraries
-RUN pip3 install pandas numpy scikit-learn matplotlib
-
 # Set the working directory
 WORKDIR /app
 
+# Install data science libraries
+COPY requirements.txt ./
+RUN pip3 install -r requirements.txt
 # Command to start the Python environment
 CMD ["python3"]
